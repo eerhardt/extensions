@@ -67,6 +67,9 @@ public static partial class AIJsonUtilities
     /// <param name="serializerOptions">The options used to extract the schema from the specified type.</param>
     /// <param name="inferenceOptions">The options controlling schema inference.</param>
     /// <returns>A JSON schema document encoded as a <see cref="JsonElement"/>.</returns>
+#if !NET9_0_OR_GREATER
+    [RequiresUnreferencedCode("Pre STJ-9 schema extraction can fail with a runtime exception if certain reflection metadata have been trimmed.")]
+#endif
     public static JsonElement ResolveParameterJsonSchema(
         AIFunctionParameterMetadata parameterMetadata,
         AIFunctionMetadata functionMetadata,
@@ -107,6 +110,9 @@ public static partial class AIJsonUtilities
     /// <param name="serializerOptions">The options used to extract the schema from the specified type.</param>
     /// <param name="inferenceOptions">The options controlling schema inference.</param>
     /// <returns>A JSON schema document encoded as a <see cref="JsonElement"/>.</returns>
+#if !NET9_0_OR_GREATER
+    [RequiresUnreferencedCode("Pre STJ-9 schema extraction can fail with a runtime exception if certain reflection metadata have been trimmed.")]
+#endif
     public static JsonElement CreateParameterJsonSchema(
         Type? type,
         string parameterName,
@@ -144,6 +150,9 @@ public static partial class AIJsonUtilities
     /// <param name="serializerOptions">The options used to extract the schema from the specified type.</param>
     /// <param name="inferenceOptions">The options controlling schema inference.</param>
     /// <returns>A <see cref="JsonElement"/> representing the schema.</returns>
+#if !NET9_0_OR_GREATER
+    [RequiresUnreferencedCode("Pre STJ-9 schema extraction can fail with a runtime exception if certain reflection metadata have been trimmed.")]
+#endif
     public static JsonElement CreateJsonSchema(
         Type? type,
         string? description = null,
@@ -170,6 +179,9 @@ public static partial class AIJsonUtilities
         return GetJsonSchemaCached(serializerOptions, key);
     }
 
+#if !NET9_0_OR_GREATER
+    [RequiresUnreferencedCode("Pre STJ-9 schema extraction can fail with a runtime exception if certain reflection metadata have been trimmed.")]
+#endif
     private static JsonElement GetJsonSchemaCached(JsonSerializerOptions options, FunctionParameterKey key)
     {
         options.MakeReadOnly();
@@ -191,9 +203,7 @@ public static partial class AIJsonUtilities
     }
 
 #if !NET9_0_OR_GREATER
-    [UnconditionalSuppressMessage("Trimming", "IL2026:Members annotated with 'RequiresUnreferencedCodeAttribute' require dynamic access",
-        Justification = "Pre STJ-9 schema extraction can fail with a runtime exception if certain reflection metadata have been trimmed. " +
-                        "The exception message will guide users to turn off 'IlcTrimMetadata' which resolves all issues.")]
+    [RequiresUnreferencedCode("Pre STJ-9 schema extraction can fail with a runtime exception if certain reflection metadata have been trimmed.")]
 #endif
     private static JsonElement GetJsonSchemaCore(JsonSerializerOptions options, FunctionParameterKey key)
     {

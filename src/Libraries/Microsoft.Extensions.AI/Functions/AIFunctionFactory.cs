@@ -5,6 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+#if !NET9_0_OR_GREATER
+using System.Diagnostics.CodeAnalysis;
+#endif
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -28,6 +31,9 @@ public static partial class AIFunctionFactory
     /// <param name="method">The method to be represented via the created <see cref="AIFunction"/>.</param>
     /// <param name="options">Metadata to use to override defaults inferred from <paramref name="method"/>.</param>
     /// <returns>The created <see cref="AIFunction"/> for invoking <paramref name="method"/>.</returns>
+#if !NET9_0_OR_GREATER
+    [RequiresUnreferencedCode("Pre STJ-9 schema extraction can fail with a runtime exception if certain reflection metadata have been trimmed.")]
+#endif
     public static AIFunction Create(Delegate method, AIFunctionFactoryCreateOptions? options)
     {
         _ = Throw.IfNull(method);
@@ -41,6 +47,9 @@ public static partial class AIFunctionFactory
     /// <param name="description">The description to use for the <see cref="AIFunction"/>.</param>
     /// <param name="serializerOptions">The <see cref="JsonSerializerOptions"/> used to marshal function parameters and any return value.</param>
     /// <returns>The created <see cref="AIFunction"/> for invoking <paramref name="method"/>.</returns>
+#if !NET9_0_OR_GREATER
+    [RequiresUnreferencedCode("Pre STJ-9 schema extraction can fail with a runtime exception if certain reflection metadata have been trimmed.")]
+#endif
     public static AIFunction Create(Delegate method, string? name = null, string? description = null, JsonSerializerOptions? serializerOptions = null)
     {
         _ = Throw.IfNull(method);
@@ -68,6 +77,9 @@ public static partial class AIFunctionFactory
     /// </param>
     /// <param name="options">Metadata to use to override defaults inferred from <paramref name="method"/>.</param>
     /// <returns>The created <see cref="AIFunction"/> for invoking <paramref name="method"/>.</returns>
+#if !NET9_0_OR_GREATER
+    [RequiresUnreferencedCode("Pre STJ-9 schema extraction can fail with a runtime exception if certain reflection metadata have been trimmed.")]
+#endif
     public static AIFunction Create(MethodInfo method, object? target, AIFunctionFactoryCreateOptions? options)
     {
         _ = Throw.IfNull(method);
@@ -87,6 +99,9 @@ public static partial class AIFunctionFactory
     /// <param name="description">The description to use for the <see cref="AIFunction"/>.</param>
     /// <param name="serializerOptions">The <see cref="JsonSerializerOptions"/> used to marshal function parameters and return value.</param>
     /// <returns>The created <see cref="AIFunction"/> for invoking <paramref name="method"/>.</returns>
+#if !NET9_0_OR_GREATER
+    [RequiresUnreferencedCode("Pre STJ-9 schema extraction can fail with a runtime exception if certain reflection metadata have been trimmed.")]
+#endif
     public static AIFunction Create(MethodInfo method, object? target, string? name = null, string? description = null, JsonSerializerOptions? serializerOptions = null)
     {
         _ = Throw.IfNull(method);
@@ -122,6 +137,9 @@ public static partial class AIFunctionFactory
         /// This should be <see langword="null"/> if and only if <paramref name="method"/> is a static method.
         /// </param>
         /// <param name="options">Function creation options.</param>
+#if !NET9_0_OR_GREATER
+        [RequiresUnreferencedCode("Pre STJ-9 schema extraction can fail with a runtime exception if certain reflection metadata have been trimmed.")]
+#endif
         public ReflectionAIFunction(MethodInfo method, object? target, AIFunctionFactoryCreateOptions options)
         {
             _ = Throw.IfNull(method);
@@ -271,6 +289,9 @@ public static partial class AIFunctionFactory
         /// <summary>
         /// Gets a delegate for handling the marshaling of a parameter.
         /// </summary>
+#if !NET9_0_OR_GREATER
+        [RequiresUnreferencedCode("Pre STJ-9 schema extraction can fail with a runtime exception if certain reflection metadata have been trimmed.")]
+#endif
         private static AIFunctionParameterMetadata? GetParameterMarshaller(
             AIFunctionFactoryCreateOptions options,
             ParameterInfo parameter,
